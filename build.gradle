@@ -1,6 +1,6 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.3.RELEASE'
-	id 'java'
+	id 'java' // https://docs.gradle.org/current/userguide/java_plugin.html
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -13,46 +13,54 @@ repositories {
 	mavenCentral()
 }
 
+/*
+  Creating a new configuration for integration tests.
+  Automatically creates:
+    - integrationTestImplementation
+    - integrationTestCompileOnly
+    - integrationTestRuntimeOnly
+  It also creates a compileIntegrationTestJava task 
+  that will compile all the source files under src/intTest/java
+*/
 sourceSets {
-  // integrationTestCompile and integrationTestRuntime dependency configurations will be created
   integrationTest {
-    java {
-      println 'sourceSets.main.output: ' + sourceSets.main.output
-      println 'main.output: ' + main.output
-      println 'test.output: ' + test.output
-      compileClasspath += main.output + test.output 
-      runtimeClasspath += main.output + test.output 
-      srcDir file('src/integration-test/java')
-    } 
-    resources.srcDir file('src/integration-test/resources')
+    // add compilation and runtime classpaths for this sourceSet
+    compileClasspath += sourceSets.main.output // compiled production classes and resources from: main sourceSet
+    runtimeClasspath += sourceSets.main.output
+    // indicate sources and resources path
+    java.srcDir('src/integration-test/java')
+    resources.srcDir('src/integration-test/resources')
   }
 }
 
 // add unit test dependencies to integration-test dependencies
 configurations {
-  integrationTestCompile.extendsFrom testCompile
-  integrationTestRuntime.extendsFrom testRuntime
+  integrationTestImplementation.extendsFrom testImplementation 
+  integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
+// dependencies declaration
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'junit:junit:4.12'
-	testImplementation 'com.jayway.restassured:rest-assured:2.8.0'
-	testImplementation 'org.codehaus.groovy:groovy-all:2.4.5'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'com.h2database:h2'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'com.jayway.restassured:rest-assured:2.8.0'
+  //testImplementation 'org.codehaus.groovy:groovy-all:2.4.5'
 }
 
 // declare integration test task
 task integrationTest(type: Test) {
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
-    outputs.upToDateWhen { false } // consider outputs of the integration test task out of date, so that integrationTest task is always run
+  description = 'Runs integration tests'
+  group = 'verification'
+  testClassesDirs = sourceSets.integrationTest.output.classesDirs
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  outputs.upToDateWhen { false } // consider outputs of the integration test task out of date, so that integrationTest task is always run
+  shouldRunAfter test // indicate that should run after unit tests
 }
 
-// ensure integration tests run before the check task and unit tests are run before integration tests, 
+// ensure integration tests run before the check task 
+// and unit tests are run before integration tests, 
 // so in any case test phases fail, our build also fails
 check.dependsOn integrationTest
-integrationTest.mustRunAfter test
 
