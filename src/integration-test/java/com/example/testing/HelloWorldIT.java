@@ -1,3 +1,4 @@
+/*
 package com.example.testing;
 
 import org.junit.Test;
@@ -14,3 +15,4 @@ public class  HelloWorldIt {
       .assertThat()
       .body("message", equalTo("hello-world"))
 }
+*/

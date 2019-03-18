@@ -26,6 +26,23 @@ Integration tests | `integration-test/java/com/example/testing` | `main/resource
 - We must be able to run only integration tests.
 - We must be able to run all tests.
 
+Run unit tests only
+`gradle clean test`
+`gradle clean build -x integrationTest`
+
+Run only integration tests
+`gradle clean integrationTest`
+`gradle clean build -x test`
+
+Run all tests
+`gradle clean test integrationTest`
+`gradle clean build `
+
+### Test results
+
+`build/reports/test/integrationTest`
+`build/reports/test/test`
+
 ### Resources
 
 https://www.petrikainulainen.net/programming/gradle/getting-started-with-gradle-integration-testing/

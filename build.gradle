@@ -17,6 +17,9 @@ sourceSets {
   // integrationTestCompile and integrationTestRuntime dependency configurations will be created
   integrationTest {
     java {
+      println 'sourceSets.main.output: ' + sourceSets.main.output
+      println 'main.output: ' + main.output
+      println 'test.output: ' + test.output
       compileClasspath += main.output + test.output 
       runtimeClasspath += main.output + test.output 
       srcDir file('src/integration-test/java')
@@ -28,7 +31,17 @@ sourceSets {
 // add unit test dependencies to integration-test dependencies
 configurations {
   integrationTestCompile.extendsFrom testCompile
-  integrationTestRuntime.extendsFrom testRuntimet
+  integrationTestRuntime.extendsFrom testRuntime
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'junit:junit:4.12'
+	testImplementation 'com.jayway.restassured:rest-assured:2.8.0'
+	testImplementation 'org.codehaus.groovy:groovy-all:2.4.5'
 }
 
 // declare integration test task
@@ -43,11 +56,3 @@ task integrationTest(type: Test) {
 check.dependsOn integrationTest
 integrationTest.mustRunAfter test
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.jayway.restassured:rest-assured:2.8.0'
-	testImplementation 'org.codehaus.groovy:groovy-all:2.4.5'
-}
