@@ -1,4 +1,4 @@
-package com.example.testing.service;
+package com.example.testing.services;
 
 import com.example.testing.models.User;
 

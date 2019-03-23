@@ -45,7 +45,10 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'com.h2database:h2'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
-  testImplementation 'com.jayway.restassured:rest-assured:2.8.0'
+  testImplementation 'io.rest-assured:rest-assured'
+  testImplementation 'io.rest-assured:json-schema-validator'
+  testImplementation 'com.github.fge:json-schema-validator:2.2.6'
+  testImplementation 'com.github.fge:json-schema-core:1.2.5'
   //testImplementation 'org.codehaus.groovy:groovy-all:2.4.5'
 }
 
