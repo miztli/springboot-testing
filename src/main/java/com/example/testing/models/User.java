@@ -26,7 +26,7 @@ public class User {
   private Integer age;
 
   @Column(name = "active")	
-  private Boolean active;
+  private Boolean active = true; // default
 
   public void setId(Long id) {
     this.id = id; 
@@ -39,7 +39,7 @@ public class User {
     this.name = name; 
   }
 
-  public String getName(String name) {
+  public String getName() {
     return name; 
   }
   
@@ -47,7 +47,7 @@ public class User {
     this.address = address; 
   }
    
-  public String getAddress(String address) {
+  public String getAddress() {
     return address; 
   } 
   
@@ -66,4 +66,13 @@ public class User {
   public Boolean isActive() {
     return active; 
   }
-} 
+
+  @Override
+  public String toString() {
+    return "User: id : " + id +
+      " name: " + name +
+      " address: " + address +
+      " age: " + age +
+      " active: " + active;
+  }
+}

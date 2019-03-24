@@ -2,7 +2,6 @@ package com.example.testing;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,8 +29,7 @@ public class TestingApplicationTests {
       new JSONObject()
         .put("name", "miztli")
         .put("address","sur 119 A")
-        .put("age",28)
-        .put("active",true);
+        .put("age",28);
 
     // post user
 		given()
@@ -39,11 +37,12 @@ public class TestingApplicationTests {
       .log()
       .all()
     .when()
-    .post(url, newUser.toString())
+      .body(newUser.toString())
+    .post(url)
       .then()
-			.statusCode(200)
+			.statusCode(201)
 			.assertThat()
-        .header("location", containsString(url))
+        .header("Location", containsString(url))
         .time(lessThan(1000L));
 	}
 
@@ -52,7 +51,7 @@ public class TestingApplicationTests {
     String url = createUrlFrom(USER_RESOURCE + "/1");
 
 		given()
-      .contentType("application/json")
+      .accept("application/json")
       .log()
       .all()
       .when()
