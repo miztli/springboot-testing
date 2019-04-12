@@ -46,6 +46,7 @@ public class TestingApplicationTests {
         .time(lessThan(1000L));
 	}
 
+	/*
 	@Test
 	public void whenFindingStudentById_Then_HttpOK_And_ResponseMatchesJsonExample() {
     String url = createUrlFrom(USER_RESOURCE + "/1");
@@ -63,7 +64,7 @@ public class TestingApplicationTests {
       .assertThat()
         .body(matchesJsonSchemaInClasspath("created-user.json"))
         .time(lessThan(1000L));
-	}
+	}*/
 
 	private String createUrlFrom(String resource) {
 		return "http://localhost:" + port + resource;

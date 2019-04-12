@@ -46,3 +46,4 @@ Run all tests
 ### Resources
 
 https://www.petrikainulainen.net/programming/gradle/getting-started-with-gradle-integration-testing/
+https://springtestdbunit.github.io/spring-test-dbunit/
