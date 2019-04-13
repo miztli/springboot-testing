@@ -6,9 +6,9 @@
 ### Recommended project structure
 
 DEFINITION | CODE PATH | RESOURCES PATH
-Source code | `main/java/com/example/testing` | `main/resources` 
-Unit tests | `test/java/com/example/testing` | `main/resources` 
-Integration tests | `integration-test/java/com/example/testing` | `main/resources` 
+Source code | `main/java/com/example/testing` | `main/resources`
+Unit tests | `test/java/com/example/testing` | `main/resources`
+Integration tests | `integration-test/java/com/example/testing` | `main/resources`
 
 ### Testing Guidelines
 
@@ -47,3 +47,4 @@ Run all tests
 
 https://www.petrikainulainen.net/programming/gradle/getting-started-with-gradle-integration-testing/
 https://springtestdbunit.github.io/spring-test-dbunit/
+https://docs.spring.io/spring/docs/5.0.5.RELEASE/spring-framework-reference/testing.html#integration-testing
