@@ -1,0 +1,1 @@
+INSERT INTO User VALUES (1, "Miztli Melgoza", "Sur 119-A #2223", 28)
