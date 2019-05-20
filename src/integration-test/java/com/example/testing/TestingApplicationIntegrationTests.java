@@ -1,29 +1,34 @@
 package com.example.testing;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.Test;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.*;
-
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestingApplication.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TestingApplicationTests {
-  private static final String USER_RESOURCE = "/users";
+@TestExecutionListeners({
+  DependencyInjectionTestExecutionListener.class,
+  DbUnitTestExecutionListener.class
+})
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+public abstract class TestingApplicationIntegrationTests {
+  //private static final String USER_RESOURCE = "/users";
 
-	@LocalServerPort
-	private int port;
+	//@LocalServerPort
+	//private int port;
 
-	@Test
+  //@Autowired
+  //private IUserService iUserService;
+
+
+
+
+	/*@Test
 	public void whenCreatingANewUser_Then_HttpOK_And_LocationUrlCreated() throws JSONException {
     String url = createUrlFrom(USER_RESOURCE);
 
@@ -47,14 +52,14 @@ public class TestingApplicationTests {
 			.assertThat()
         .header("Location", containsString(url))
         .time(lessThan(2000L));
-	}
+	}*/
 
-	@Test
+	/*@Test
   @Sql("/db-setup-data/new-user.sql")
 	public void whenFindingStudentById_Then_HttpOK_And_ResponseMatchesJsonExample() {
-    String url = createUrlFrom(USER_RESOURCE + "/1");
+    /*String url = createUrlFrom(USER_RESOURCE + "/1");
 
-		/*given()
+		given()
       .accept("application/json")
       .log()
       .all()
@@ -66,11 +71,11 @@ public class TestingApplicationTests {
       .statusCode(200)
       .assertThat()
         .body(matchesJsonSchemaInClasspath("created-user.json"))
-        .time(lessThan(1000L));*/
+        .time(lessThan(1000L));
 		assert 1==1;
-	}
+	}*/
 
-	private String createUrlFrom(String resource) {
+	/*private String createUrlFrom(String resource) {
 		return "http://localhost:" + port + resource;
-	}
+	}*/
 }

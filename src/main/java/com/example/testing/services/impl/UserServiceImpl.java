@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @Service
@@ -33,12 +34,23 @@ public class UserServiceImpl implements IUserService {
   
   @Override	
   public void update(User user) {
-  
+    User existingUser = iUserRepository
+                          .findById(user.getId())
+                          .orElseThrow(() ->
+                            new EntityNotFoundException("User is not in DB"));
+
+    existingUser.setName(user.getName());
+    existingUser.setAge(user.getAge());
+    existingUser.setAddress(user.getAddress());
   }
   
   @Override	
   public void delete(Long id) {
-  
+    User user = iUserRepository.findById(id)
+                  .orElseThrow(() ->
+                    new EntityNotFoundException("User is not in DB"));
+
+    iUserRepository.delete(user);
   }
 }
 
